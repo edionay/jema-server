@@ -9,7 +9,7 @@ const User = require('./models/users');
 
 const port = process.env.PORT || 8080;
 
-const url = `mongodb+srv://vstillo:l69nHArDzsh4s2OQ@cluster0-w2p5a.gcp.mongodb.net/test?retryWrites=true&w=majority`
+const url = `mongodb+srv://jema:jXJz3MPGbjB94rHw@cluster0-tzvuq.mongodb.net/test?retryWrites=true&w=majority`
 
 mongoose.connect(url, { useNewUrlParser: true });
 
@@ -26,11 +26,13 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.listen(port)
 
 server.get('/', async(req, res) => {
-    // users.forEach(async user => {
-    //     user.passcode = cpfToPasscode(user.cpf)
-    //     await User.create(user);
-    // });
-    // console.log("AEW!")
+
+    console.log('get')
+        // users.forEach(async user => {
+        //     user.passcode = cpfToPasscode(user.cpf)
+        //     await User.create(user);
+        // });
+        // console.log("AEW!")
 })
 
 server.get('/days', async(req, res) => {
