@@ -56,40 +56,40 @@ server.post('/login', async(req, res) => {
     }
 })
 
-server.post('/schedule', async(req, res) => {
-    const user = req.body.user
-    const schedule = req.body.selectedTime
+// server.post('/schedule', async(req, res) => {
+//     const user = req.body.user
+//     const schedule = req.body.selectedTime
 
-    try {
-        const foundUser = await usersController.getOne(user.email, user.passcode.toString())
-        if (!foundUser) res.status(401).send("Credenciais inválidas")
-        else if (!foundUser.upToVote) res.status(402).send(foundUser)
-        else {
-            const day = await daysController.getOne(schedule.dayId)
-            const time = day.hours.find(day => { return day._id == schedule._id })
-            if (!time.appointment1) {
-                time.appointment1 = foundUser._id
-                foundUser.upToVote = false
-                foundUser.schedule.day = day.label
-                foundUser.schedule.date = schedule.date
-                foundUser.schedule.time = time.label
-                await day.save()
-                foundUser.save()
-                res.status(201).send(foundUser)
-            } else if (!time.appointment2) {
-                time.appointment2 = foundUser._id
-                foundUser.upToVote = false
-                foundUser.schedule.day = day.label
-                foundUser.schedule.date = schedule.date
-                foundUser.schedule.time = time.label
-                await day.save()
-                await foundUser.save()
-                res.status(201).send(foundUser)
-            } else res.status(400).send("Horários indisponíveis para este dia")
-        }
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).send()
-    }
-})
+//     try {
+//         const foundUser = await usersController.getOne(user.email, user.passcode.toString())
+//         if (!foundUser) res.status(401).send("Credenciais inválidas")
+//         else if (!foundUser.upToVote) res.status(402).send(foundUser)
+//         else {
+//             const day = await daysController.getOne(schedule.dayId)
+//             const time = day.hours.find(day => { return day._id == schedule._id })
+//             if (!time.appointment1) {
+//                 time.appointment1 = foundUser._id
+//                 foundUser.upToVote = false
+//                 foundUser.schedule.day = day.label
+//                 foundUser.schedule.date = schedule.date
+//                 foundUser.schedule.time = time.label
+//                 await day.save()
+//                 foundUser.save()
+//                 res.status(201).send(foundUser)
+//             } else if (!time.appointment2) {
+//                 time.appointment2 = foundUser._id
+//                 foundUser.upToVote = false
+//                 foundUser.schedule.day = day.label
+//                 foundUser.schedule.date = schedule.date
+//                 foundUser.schedule.time = time.label
+//                 await day.save()
+//                 await foundUser.save()
+//                 res.status(201).send(foundUser)
+//             } else res.status(400).send("Horários indisponíveis para este dia")
+//         }
+//     } catch (error) {
+//         console.error(error.message)
+//         res.status(500).send()
+//     }
+// })
 console.log('Port: ' + port)
